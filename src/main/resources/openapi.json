@@ -1,0 +1,81 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Azure Functions API",
+		"version": "1.0.0"
+	},
+	"paths": {
+		"/api/hello": {
+			"get": {
+				"summary": "Get a greeting message",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RequestModel"
+							}
+						}
+					}
+				},
+				"parameters": [
+					{
+						"name": "name",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "category",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"enum": ["CATEGORY_A", "CATEGORY_B", "CATEGORY_C"]
+						}
+					}
+					],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved greeting message"
+					},
+					"400": {
+						"description": "Invalid input"
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		},
+		"schemas": {
+			"RequestModel": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string",
+						"enum": ["CATEGORY_A", "CATEGORY_B", "CATEGORY_C"]
+					}
+				}
+			}
+		}
+		}
+	}
